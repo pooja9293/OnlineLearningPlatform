@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Welcome to the Online Learning Platform</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        /* Reset some default margin and padding */
+        body,
+        h1,
+        h2,
+        h3,
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Set a background color for the entire page */
+        body {
+            background-color: #f8f9fa;
+            /* Light gray background */
+            font-family: Arial, sans-serif;
+            background-image: url("https://c4.wallpaperflare.com/wallpaper/165/275/593/colorful-windows-10-gradient-minimalism-soft-gradient-hd-wallpaper-preview.jpg");
+        }
+
+        /* Style the heading at the top */
+        .advanced-heading {
+            text-align: center;
+            background-color: #010101;
+            /* Blue background for the heading */
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 15px;
+            color: #fff;
+            /* White text color */
+        }
+
+        /* Style the card container */
+        .container {
+            margin-top: 20px;
+        }
+
+        /* Style the cards */
+        .card {
+            border: none;
+            border-radius: 15px;
+            background-color: #fff;
+            /* White background for cards */
+            transition: transform 0.2s;
+            margin: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* Add a subtle shadow to cards */
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+        }
+
+        /* Style card images */
+        .card-img-top {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Style the card titles */
+        .card-title {
+            text-align: center;
+            font-size: 24px;
+            /* Adjust the font size */
+        }
+
+        /* Style the "Sign Up" button */
+        .btn-primary {
+            background-color: #0056b3;
+            /* Blue button color */
+            color: #fff;
+            /* White text color */
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            /* Darker blue on hover */
+        }
+
+        /* Style the "Login" buttons */
+        .btn-success {
+            background-color: #28a745;
+            /* Green button color */
+            color: #fff;
+            /* White text color */
+            border: none;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+            /* Turquoise button color */
+            color: #fff;
+            /* White text color */
+            border: none;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .custom-heading {
+            text-align: center;
+            background-color: black;
+            /* Default background color */
+            color: #fff;
+            /* Default text color */
+            padding: 20px;
+            border-radius: 15px;
+            animation: pulsate 2s ease-in-out infinite;
+            /* Apply the pulsating animation */
+        }
+
+        @keyframes pulsate {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+                /* Scale up to 105% size */
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .custom-heading h1 {
+            font-size: 36px;
+            /* Larger font size for the main heading */
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .custom-heading p {
+            font-size: 20px;
+            font-family: 'Times New Roman', Times, serif;
+            /* Font size for the subheading */
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- "Welcome to the Online Learning Platform" heading outside of cards -->
+    <div class="container mt-6">
+        <div class="custom-heading">
+            <h1>Welcome to the E-Learning Platform</h1>
+            <p>Empowering your journey to success</p>
+        </div>
+    </div>
+
+
+    <div class="row mt-3 justify-content-center">
+        <div class="col-md-4">
+            <div class="card">
+                <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHJ1dW9nY3VnZzVxeWlibnl6ZGY1ZmMyaG41bTBpOHl2azltanRmcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l56vEYYNZ9lu6uf01Z/giphy.gif"
+                    class="card-img-top mx-auto d-block" alt="Student Login" style="width: 300px; height: 200px;">
+                <div class="card-body">
+                    <h3 class="card-title text-center">Teacher Login</h3>
+                    <a href="{{ url_for('teacher_login') }}" class="btn btn-success btn-block">Login</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <img src="https://www.vyond.com/wp-content/uploads/2021/01/Book-Club-8-480p-4fa264dd-e035-40cc-8907-e78d890c8c4e.gif"
+                    class="card-img-top mx-auto d-block" alt="Teacher Login" style="width: 300px; height: 200px;">
+                <div class="card-body">
+                    <h3 class="card-title text-center">Student Login</h3>
+                    <a href="{{ url_for('student_login') }}" class="btn btn-info btn-block">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+    <br><br><br>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    &copy; 2023 Pooja R Suvarna. All rights reserved.
+                </div>
+                <div class="col-md-12">
+                    <!-- Add social media icons with links here -->
+                    <a href="https://www.facebook.com/your-facebook-page" target="_blank" class="text-white mr-2">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/your-instagram-page" target="_blank" class="text-white mr-2">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://github.com/pooja9293" target="_blank" class="text-white">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

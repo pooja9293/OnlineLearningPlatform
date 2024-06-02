@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=AYOqp3mELxzbn4OXvEzqUmYPcfAIUHob_Ca9aB4n6yRhJQ-ZMzXtXRTbyAjLoiv2SkHeHwVjgX2mPjYF"></script>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+
+    <style>
+        /* Custom CSS for this page */
+        body {
+            background-color: #af6eb7;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1;
+            margin-top: 20px;
+        }
+
+        header {
+            background-color: #000000;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .course-card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px;
+            background-color: #fff;
+            position: relative;
+        }
+
+        .course-title {
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            /* Make the title clickable */
+        }
+
+        .course-description {
+            margin-top: 10px;
+        }
+
+        .course-price {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .subscribe-button {
+            background-color: #9c3d9c;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .subscribe-button:hover {
+            background-color: #9c3d9c;
+        }
+
+        .student-courses {
+            display: none;
+        }
+
+        .student-course-title {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .student-course-link {
+            margin-top: 5px;
+        }
+
+        .search-bar {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Online Learning Platform</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('subscribed') }}">subscribed</a></li>
+                <li><a href="{{ url_for('home') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Add a search bar to search for courses -->
+        <input type="text" class="search-bar" placeholder="Search for courses..." oninput="searchCourses(this.value)">
+
+        <!-- Display available courses -->
+        <div class="course-card">
+            <div class="course-title">C Programming</div>
+            <div class="course-description">
+                C is a powerful, low-level, and procedural programming language known for its efficiency and
+                portability.
+                It is widely used in system programming and offers fine control over hardware and memory. Pointers are a
+                fundamental concept in C, and it has a standard library for common tasks. It remains popular in various
+                domains and has a large community of developers.
+            </div>
+
+            <button class="subscribe-button" onclick="generateQRCode('C Programming', 'payment.html')">Pay</button>
+        </div>
+
+        <!-- Repeat similar structure for other courses -->
+        <div class="course-card" data-course-id="2">
+            <div class="course-title" onclick="toggleCourseInfo(2)">C++ Programming</div>
+            <div class="course-description">
+                <span id="description-2">Explore an extension of C with strong support for object-oriented programming.
+                    Known for performance, low-level memory control, and a large community.</span>
+            </div>
+            <div class="course-price">
+                <span id="price-3">$59.99</span>
+            </div>
+
+            <button class="subscribe-button" onclick="startNpm()">Pay</button>
+        </div>
+
+        <div class="course-card" data-course-id="3">
+            <div class="course-title" onclick="toggleCourseInfo(3)">Java Programming</div>
+            <div class="course-description">
+                <span id="description-3">Platform-independent, pure object-oriented language with automatic memory
+                    management, a comprehensive standard library, and a focus on security. Popular for enterprise
+                    applications and Android development.</span>
+            </div>
+            <div class="course-price">
+                <span id="price-3">$59.99</span>
+            </div>
+
+            <button class="subscribe-button" onclick="startNpm()">Pay</button>
+        </div>
+
+        <div id="qrcode-container"></div>
+
+        <!-- Add more courses as needed -->
+
+        <!-- Display subscribed courses -->
+        <div class="student-courses" id="student-courses">
+            <div class="student-course-title">Subscribed Courses:</div>
+            <!-- Add subscribed course links dynamically -->
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2023 Pooja R Suvarna. All rights reserved.
+    </div>
+
+    <script>
+        // JavaScript code for the student dashboard
+        function toggleCourseInfo(courseId) {
+            const courseDescription = document.getElementById(`description-${courseId}`);
+            courseDescription.style.display = courseDescription.style.display === 'none' ? 'block' : 'none';
+        }
+        function generateQRCode(courseName, url) {
+            const qrCodeURL = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + url;
+            const qrCodeWindow = window.open(qrCodeURL, '_blank');
+            qrCodeWindow.focus();
+        }
+
+        // Add an event listener to the "Pay" button to generate the QR code and open a new window
+        const payButton = document.querySelector('.subscribe-button');
+        payButton.addEventListener('click', function () {
+            // Define the course name and URL to redirect
+            const courseName = 'C Programming';
+            const redirectURL = 'https://gleaming-mooncake-96a3b1.netlify.app'; // Replace with the actual URL
+
+            // Generate the QR code and display it in a new browser window
+            generateQRCode(courseName, redirectURL);
+        });
+
+
+
+        function subscribeCourse(courseId) {
+            const courseCard = document.querySelector(`.course-card[data-course-id="${courseId}"]`);
+            if (courseCard) {
+                courseCard.style.display = 'none';
+
+                // Add the subscribed course link to the student's list of courses
+                const subscribedCourses = document.getElementById('student-courses');
+                const courseTitle = document.querySelector(
+                    `.course-card[data-course-id="${courseId}"] .course-title`
+                );
+                const courseLink = document.createElement('a');
+                courseLink.href = '#'; // Add the actual course link here
+                courseLink.textContent = courseTitle.textContent;
+                courseLink.className = 'student-course-link';
+                subscribedCourses.appendChild(courseLink);
+            }
+        }
+
+        function searchCourses(query) {
+            const courseCards = document.querySelectorAll('.course-card');
+            for (const card of courseCards) {
+                const courseTitle = card.querySelector('.course-title');
+                if (courseTitle.textContent.toLowerCase().includes(query.toLowerCase())) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            }
+        }
+
+        function startNpm() {
+            window.location.href = 'http://localhost:8888';
+            fetch('/start-npm', { method: 'GET' }).then(response => {
+                if (response.status === 200) {
+                    console.log('npm start initiated.');
+                    // Only change the window location if npm start was successful.
+                } else {
+                    console.error('Failed to initiate npm start.');
+                }
+            });
+        }
+
+        function redirectToPayPal() {
+            // Construct the URL with query parameters
+            const url = '/http://localhost:8888/';
+
+            // Redirect the user to the PayPal integration folder
+            window.location.href = url;
+        }
+    </script>
+</body>
+
+</html>
